@@ -37,17 +37,10 @@ on post-fs-data
     chmod 0775 /data/log/err
     chown radio radio /data/log/err
 
-# handle crash reason
-    chown radio system /sys/module/modem_utils/parameters/cp_crash_info
-    chmod 0660 /sys/module/modem_utils/parameters/cp_crash_info
-    chown radio system /sys/module/modem_utils/parameters/cp_crash_link
-    chmod 0660 /sys/module/modem_utils/parameters/cp_crash_link
-
 service cpboot-daemon /vendor/bin/cbd -d -tss310 -bm -mm -P by-name/radio
     class main
     user root
     group radio cache inet misc audio sdcard_rw log sdcard_r shell system
-    seclabel u:r:cbd:s0
 
 on property:ro.vendor.multisim.simslotcount=*
    write /sys/module/modem_ctrl_ss310ap/parameters/ds_detect ${ro.vendor.multisim.simslotcount}
